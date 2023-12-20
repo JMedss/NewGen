@@ -1,5 +1,46 @@
+@import url("https://use.typekit.net/rwk6jnw.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body {
+    padding: 0px;
+    margin: 0px;
+}
 
+h1 {
+    font-family: Futura PT;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: Futura PT;
+    font-style: oblique;
+    font-weight: bold;
+    font-size: 42px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+h3 {
+    font-family: Futura PT;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+h4 {
+    font-family: Futura PT;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+p {
+    font-weight: 400;
+}
+
+button {
+    font-family: Futura PT;
+    font-weight: bold;
+}

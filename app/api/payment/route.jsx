@@ -14,8 +14,8 @@ export async function POST(request) {
             }
         ],
         mode: "subscription",
-        success_url: "https://www.newgendigitalmedia.com/dashboard",
-        cancel_url: "https://www.newgendigitalmedia.com/pricing"
+        success_url: "http://localhost:3000/dashboard",
+        cancel_url: "http://localhost:3000/pricing"
     })
 
     return NextResponse.json(session.url)

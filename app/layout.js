@@ -1,9 +1,11 @@
-import { Inter } from 'next/font/google'
+
 import './globals.css'
 import Provider from './context/AuthContext'
 import ToasterContext from './context/ToasterContext'
+import Navbar from './components/Navbar'
+import Footer from './components/footer/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export const metadata = {
   title: 'NewGen Digital Media',
@@ -13,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}><Provider><ToasterContext />{children}</Provider></body>
+      <body><Provider><ToasterContext /><Navbar />{children}<Footer /></Provider></body>
     </html>
   )
 }
