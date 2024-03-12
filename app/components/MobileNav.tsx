@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 
 type MobileNavProps = {
@@ -18,7 +18,7 @@ type MobileNavProps = {
 const MobileNav = ({ state, setState, links }: MobileNavProps) => {
     // remove object from links
     const fixedLinks = links.links
-
+    const router = useRouter()
     // disables scrolling when mobile nav is open
     useEffect(() => {
         if(state) {
@@ -27,6 +27,15 @@ const MobileNav = ({ state, setState, links }: MobileNavProps) => {
             document.body.style.overflow = "auto"
         }
     }, [state])
+
+    // handle navigation
+    const handleNav = (name: string) => {
+        const link = fixedLinks.find(link => link.name === name)
+        if(link) {
+            router.push(link.href)
+            setState(!state)
+        }
+    }
     
   return (
     <div className={state ? "fixed inset-0 bg-white/40 z-50" : "hidden"}>
@@ -49,10 +58,10 @@ const MobileNav = ({ state, setState, links }: MobileNavProps) => {
                     <ul>
                         {fixedLinks && (
                             fixedLinks.map((link, index) => (
-                                <li key={index} className="text-[#fee302] text-center bg-white/5 rounded-sm p-2 mt-4">
-                                    <Link onClick={() => setState(!state)} href={link.href}>
+                                <li key={index}>
+                                    <button onClick={() => handleNav(link.name)} className="text-[#fee302] font-normal text-center bg-white/5 rounded-sm p-2 mt-4 w-full hover:bg-[#fee302] hover:text-white hover:font-bold transition-all">
                                         {link.name}
-                                    </Link>
+                                    </button>
                                 </li>
                             ))
                         )}
