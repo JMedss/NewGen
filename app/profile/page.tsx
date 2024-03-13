@@ -48,10 +48,12 @@ const Profile = () => {
   const [subscriptions, setSubscriptions] = useState<Stripe.Subscription[] | null >()
   const [customerInfo, setCustomerInfo] = useState<Stripe.Customer | null>()
   const [cardInfo, setCardInfo] = useState<{
+    type: string,
     brand: string,
     last4: string,
     exp_month: string,
-    exp_year: string
+    exp_year: string,
+    linkUrl: string
   } | null >()
   const [invoice, setInvoice] = useState<string | null | undefined>()
   // get the customer & supscription info from stripe
@@ -88,8 +90,22 @@ const Profile = () => {
   }
   }, [customer, status])
 
+  // State for if card type is link or card
+  const [cardType, setCardType] = useState<"link" | "card" | null>()
+  // useEffect to set the card type
+  useEffect(() => {
+    if(cardInfo) {
+      if(cardInfo.type === "card") {
+        setCardType("card")
+      } else if(cardInfo.type === "link"){
+        setCardType("link")
+      } else {
+        setCardType(null)
+      }
+    }
+  }, [cardInfo])
 
-  
+
   // function to get the time of day and returns the proper greeting
   const getGreeting = () => {
     //get & format the time
@@ -116,7 +132,7 @@ const Profile = () => {
         <div className="flex flex-col w-[80%] mx-auto gap-10">
           <h3 className="text-white font-bold text-[24px] my-12 tracking-wider">{greeting}, {session?.user?.name}</h3>
           <AccountInfo email={customer.email} name={customer.name} provider={customer.provider} id={customer.id} stripeId={customerInfo?.id}/>
-          <SubscriptionInfo subscriptions={subscriptions} cardInfo={cardInfo} invoice={invoice} customerStripeId={customerInfo?.id} customerId={customer.id} provider={customer.provider}/>
+          <SubscriptionInfo subscriptions={subscriptions} cardInfo={cardInfo} invoice={invoice} customerStripeId={customerInfo?.id} customerId={customer.id} provider={customer.provider} cardType={cardType}/>
         </div>
       </section>
     </main>

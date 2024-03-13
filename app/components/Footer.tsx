@@ -22,7 +22,7 @@ const Footer = () => {
                 <h3 className="font-bold ">Policies</h3>
                 <ul className="flex flex-col items-center">
                     <li><Link href="/terms-of-use">Terms Of Use</Link></li>
-                    <li><Link href="/cancellation-policy">Cancellation & Refund</Link></li>
+                    <li><Link href="/terms-of-use#cancelationRefunds">Cancellation & Refund</Link></li>
                     <li><Link href="/privacy-policy">Privacy</Link></li>
                 </ul>
             </div>

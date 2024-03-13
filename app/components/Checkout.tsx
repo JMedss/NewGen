@@ -257,7 +257,7 @@ const CheckoutForm = ({price}: PropType) => {
                             checked={agreement}
                             onChange={(e) => setAgreement(!agreement)}
                             />
-                            By completing this purchase, you agree to our <Link className="text-[#fee302]" href="/terms-of-use">Terms of Use</Link> and <Link className="text-[#fee302]" href="/privacy-policy">Privacy Policy.</Link> Additionally, you acknowledge that your subscription will be charged to your card monthly. You can manage or cancel your subscription at any time.
+                            By completing this purchase, you agree to our <Link className="text-[#fee302]" href="/terms-of-use">Terms of Use</Link> and <Link className="text-[#fee302]" href="/privacy-policy">Privacy Policy.</Link> Additionally, you acknowledge that your subscription will be charged to your default payment method monthly. You can manage or cancel your subscription at any time.
                         </label>
                     </div>
                     <div className='flex items-center'>

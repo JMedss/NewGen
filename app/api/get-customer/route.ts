@@ -21,14 +21,14 @@ export async function POST(request: Request) {
         const session: CustomSession | null = await getServerSession(authOptions)
         // If no session, return unauthorized error
         if (!session) {
-            return new Response('Unauthorized', { status: 401 })
+            return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 })
         }
         // Get the body and deconstruct the request
         const { sessionEmail, sessionId } = await request.json()
 
         // ensure sessionId matches the session id from backend
         if (sessionId !== session.user.id) {
-            return new Response('Unauthorized', { status: 401 })
+            return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 })
         }
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
         // get the customer info from stripe
@@ -58,21 +58,42 @@ export async function POST(request: Request) {
             const defaultPaymentMethodID = subscriptions.data[0].default_payment_method
             // declare a variable to hold the card
             let card: {} = {
+                type: "",
                 brand: "",
                 last4: "",
                 exp_month: "",
-                exp_year: ""
+                exp_year: "",
+                linkUrl: ""
             }
+
             // ensure the id is a string
             if(typeof defaultPaymentMethodID === "string") {
                 const cardInfo = await stripe.paymentMethods.retrieve(defaultPaymentMethodID)
-                card = {
-                    brand: cardInfo.card?.brand,
-                    last4: cardInfo.card?.last4,
-                    exp_month: cardInfo.card?.exp_month,
-                    exp_year: cardInfo.card?.exp_year
+                if(cardInfo.type === "link") {
+                    const billingPortalLink = await stripe.billingPortal.sessions.create({
+                        customer: customer.data[0].id,
+                        return_url: "https://www.newgendigitalmedia.com/profile"
+                    })
+                    card = {
+                        type: "link",
+                        brand: undefined,
+                        last4: undefined,
+                        exp_month: undefined,
+                        exp_year: undefined,
+                        linkUrl: billingPortalLink.url
+                    }
+                } else if(cardInfo.type === "card") {
+                    card = {
+                        type: "card",
+                        brand: cardInfo.card?.brand,
+                        last4: cardInfo.card?.last4,
+                        exp_month: cardInfo.card?.exp_month,
+                        exp_year: cardInfo.card?.exp_year,
+                        linkUrl: undefined
+                    }
                 }
             }
+
             // get latest invoice
             let invoice: string | null | undefined
             const latestInvoiceId = subscriptions.data[0].latest_invoice
