@@ -1,0 +1,9 @@
+services:
+  newgen:
+    build: .
+    image: ghcr.io/jmedss/newgen:latest
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    

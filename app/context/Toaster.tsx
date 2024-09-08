@@ -15,10 +15,11 @@ const ToasterContext = ( ) => {
                     className: "",
                     duration: 4000,
                     style: {
-                        background: "linear-gradient(to right, #021628, #00284C)",
+                        background: "#43607B",
+                        borderRadius: "8px",
                         color: "#fff",
-                        boxShadow: "-8px 8px 10px #000",
-                        outline: "solid 1px #fee302",
+                        boxShadow: "-8px 8px 10px 0px rgba(0,0,0,0.4)",
+                        outline: "solid 1px rgba(255, 255, 255 ,0.5)",
                     },
                     // Default options for specific types
                     success: {

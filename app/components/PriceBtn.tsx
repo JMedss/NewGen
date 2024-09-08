@@ -27,7 +27,7 @@ const PriceBtn = ({ priceId }: ButtonProps) => {
       setActive(true)
     } else {
       // otherwise push them to checkout
-      const url = `/services/checkout-${priceId}`
+      const url = `/services/checkout-${priceId}` 
       router.push(url)
     }
   }

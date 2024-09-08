@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import AccountInfo from "../components/profile-page/AccountInfo"
 import SubscriptionInfo from "../components/profile-page/SubscriptionInfo"
 import Stripe from "stripe"
-
+import { signOut } from "next-auth/react"
 
 interface CustomSession extends Session {
   expires: string,
@@ -128,12 +128,13 @@ const Profile = () => {
   const greeting: Greeting = getGreeting()
   return (
     <main>
-      <section className="w-screen min-h-screen">
+      <section className="w-screen bg-blue-gradient mt-[100px] min-h-screen flex flex-col items-center">
         <div className="flex flex-col w-[80%] mx-auto gap-10">
-          <h3 className="text-white font-bold text-[24px] my-12 tracking-wider">{greeting}, {session?.user?.name}</h3>
+          <h3 className="text-white font-black text-[24px] my-12">{greeting}, <span className="text-yellow-primary">{session?.user?.name}</span></h3>
           <AccountInfo email={customer.email} name={customer.name} provider={customer.provider} id={customer.id} stripeId={customerInfo?.id}/>
           <SubscriptionInfo subscriptions={subscriptions} cardInfo={cardInfo} invoice={invoice} customerStripeId={customerInfo?.id} customerId={customer.id} provider={customer.provider} cardType={cardType}/>
         </div>
+        <button onClick={() => signOut()} className="my-12 bg-yellow-primary font-black text-black-primary px-12 py-4 rounded-[8px]">SIGN OUT</button>
       </section>
     </main>
   )

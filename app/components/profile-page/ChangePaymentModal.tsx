@@ -55,7 +55,11 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
     const CARD_OPTIONS = {
         style: {
             base: {
-                color: "#fff",
+                backgroundColor: "#fffafa",
+                "::placeholder": {
+                    color: "rgba(40, 40, 40, 0.4)",
+                },
+                color: "#282828",
                 fontSize: "16px",
                 fontFamily: "Futura PT, sans-serif",
             },
@@ -116,7 +120,7 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
         })
         // if error, return error
         if (paymentMethod.error) {
-            toast.error("Card details are not entered correctlyCard details are not entered correctly")
+            toast.error("Card details are not entered correctly")
             return
         }
         const paymentMethodId = paymentMethod.paymentMethod?.id
@@ -161,21 +165,21 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
 
 
   return (
-    <div className={state ? "bg-white/40 fixed inset-0 z-50 overflow-y-auto" : "hidden"}>
-      <div className="absolute bg-gradient-to-r from-[#021628] to-[#00284C] shadow-lg shadow-black rounded-md py-2 px-2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] min-w-[320px] max-w-[600px] max-h-[90vh] flex flex-col items-center overflow-y-auto">
+    <div className={state ? "bg-black/40 fixed inset-0 z-50 overflow-auto" : "hidden"}>
+      <div className="absolute bg-light-blue mt-[50px] h-[600px] lg:h-[700px] border border-white-primary/50 rounded-[8px] py-2 px-2 md:px-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] min-w-[320px] max-w-[600px] flex flex-col items-center overflow-y-auto">
             <div className="flex flex-col w-full min-h-full">
                 <div className="w-full flex justify-end my-2">
-                    <button onClick={handleClose}>X</button>
+                    <button onClick={handleClose} className="text-yellow-primary">X</button>
                 </div>
                 <div className="w-full flex justify-center mb-4">
-                    <h3 className="text-white font-bold text-[24px]">Please enter your card information.</h3>
+                    <h3 className="text-yellow-primary font-bold text-[24px]">Please enter your card information.</h3>
                 </div>
                     <form onSubmit={handleSubmit} className="w-full min-w-[300px] flex flex-col gap-4">
                     <h4 className="font-bold lg:text-[24px] text-white">Billing Address</h4>
                     <div className="flex flex-col">
                         <label className="text-[#fee302]" htmlFor="address">Street Address</label>
                         <input
-                            className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                            className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                             id="address"
                             type="text"
                             value={data.streetAddress}
@@ -188,7 +192,7 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
                         <div className="flex flex-col w-full">
                             <label className="text-[#fee302]" htmlFor="city">City</label>
                             <input
-                                className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                                className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                                 id="city"
                                 type="text"
                                 value={data.city}
@@ -200,7 +204,7 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
                         <div className="flex flex-col">
                             <label className="text-[#fee302]" htmlFor="state">State</label>
                             <select 
-                                className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                                className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                                 name="state" 
                                 value={data.state}
                                 onChange={(e) => setData({...data, state: e.target.value})}
@@ -217,7 +221,7 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
                     <div className="flex flex-col">
                             <label className="text-[#fee302]" htmlFor="country">Country</label>
                             <select 
-                                className="w-full country bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                                className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                                 name="country"
                                 value={data.country}
                                 onChange={(e) => setData({...data, country: e.target.value})} 
@@ -236,7 +240,7 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
                         <div className="flex flex-col w-full">
                             <label className="text-[#fee302]" htmlFor="cardHolderName">Cardholder Name</label>
                             <input
-                                className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                                className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                                 value={data.cardholderName}
                                 onChange={(e) => setData({...data, cardholderName: e.target.value})}
                                 id="cardHolderName"
@@ -250,13 +254,13 @@ const ChangePaymentModal = ({ state, setState, customerStripeId, customerId, sub
 
                     <div className="flex flex-col">
                         <label className="text-[#fee302]">Card Details</label>
-                        <div key={cardElementKey} className='border border-white rounded-md py-3 px-2 shadow-lg shadow-black focus:outline focus:outline-[#fee302]'>
+                        <div key={cardElementKey} className='block w-full bg-white-primary py-2.5 px-2 rounded-[8px] border-0 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6'>
                             <CardElement onChange={(event) => setCardFilledOut(event.complete)} options={CARD_OPTIONS} />
                         </div>
                     </div>
                     <button 
                     disabled={disable}
-                    className='bg-[#fee302] disabled:border disabled:border-[#fee302] disabled:bg-[#fee302]/0 disabled:hover:scale-100 disabled:hover:translate-y-0 focus:outline-1 focus:outline-white font-bold py-2 px-4 rounded-md shadow-lg shadow-black transition ease-in-out duration-300'
+                    className='bg-yellow-primary text-black-primary mb-4 font-black text-[18px] py-2 rounded-[8px] mt-4 disabled:opacity-60'
                     type="submit" 
                     >
                         ADD CARD

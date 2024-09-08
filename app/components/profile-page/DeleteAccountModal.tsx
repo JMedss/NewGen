@@ -47,16 +47,14 @@ const DeleteAccountModal = ({ state, setState, userId, stripeId, provider }: Pro
         } 
     }
   return (
-    <div className={state ? "bg-white/40 fixed inset-0 z-50 overflow-y-auto" : "hidden"}>
-        <div className='bg-gradient-to-r from-[#021628] to-[#00284C] shadow-lg shadow-black rounded-md py-2 px-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col min-w-[300px] min-h-[20vh]'>
-            <div className='w-full flex justify-end items-center'>
-                <button className='text-[#fee302]' onClick={() => setState(false)}>X</button>
-            </div>
+    <div className={state ? "bg-black/40 fixed inset-0 z-50 overflow-y-auto" : "hidden"}>
+        <div className='bg-light-blue border border-white-primary/50 rounded-[8px] py-2 px-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center min-w-[300px] min-h-[20vh]'>
+            
             <div className='w-full flex flex-col items-center gap-6'>
                 <p className='text-white font-bold text-[16px] text-center md:text-left md:text-[20px] lg:text-[24px]'>Are you sure you want to delete your account?</p>
                 <div className='w-full flex flex-col items-center md:flex-row justify-center gap-2'>
-                    <button className='bg-gray-500 px-0 w-[80%]' onClick={() => setState(false)}>Cancel</button>
-                    <button className='bg-[#fee302] px-0 w-[80%]' onClick={handleDeleteAccount}>Delete Account</button>
+                    <button className='bg-black-primary/60 text-yellow-primary font-bold w-full py-1.5 rounded-[8px]' onClick={() => setState(false)}>Cancel</button>
+                    <button className='bg-yellow-primary w-full font-bold text-black-primary py-1.5 rounded-[8px]' onClick={handleDeleteAccount}>Delete Account</button>
                 </div>
             </div>
         </div>

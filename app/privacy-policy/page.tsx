@@ -3,7 +3,7 @@ import TermsCard from "../components/termsofuse/TermsCard"
 const PrivacyPolicy = () => {
   return (
     <main>
-    <section className='flex justify-center'>
+    <section className='flex justify-center bg-blue-gradient mt-[100px] pb-24'>
         <div className='w-[75%] min-w-[300px] max-w-[700px] flex flex-col justify-center'>
             <div className='flex w-full justify-center my-12 text-[16px]'>
                 <h2 className=''>Privacy Policy</h2>

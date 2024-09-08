@@ -26,12 +26,13 @@ const PasswordChange = ({provider, sessionId}: PasswordChangeProps) => {
     //state for passwords do not match alert
     const [passwordAlert, setPasswordAlert] = useState(false)
 
-    // state for form data
+    // state for new password data
     const [data, setData] = useState({
         sessionId: sessionId ? sessionId : "",
         newPassword: "",
         confirmPassword: ""
     })
+
     // if google account it shows alert otherwise it shows password form
     const handlePassword = (e: React.FormEvent) => {
         e.preventDefault()
@@ -106,26 +107,26 @@ const PasswordChange = ({provider, sessionId}: PasswordChangeProps) => {
         <h4 className="font-bold text-[20px] text-[#fee302] tracking-wider">Password: </h4>
       </div>
       <div className={password ? "hidden" : 'flex flex-col w-full h-full justify-center items-center'}>
-                <div className={googleAlert ? "flex bg-red-500 my-2 py-2 px-1 rounded-sm w-[80%] min-w-[290px]" : "hidden"}>
+                <div className={googleAlert ? "flex bg-red-500 my-2 py-2 px-1 rounded-sm w-full md:w-[80%] min-w-[290px] rounded-8px" : "hidden"}>
                     <p className="text-white leading-tight">Your account was signed in using google. To update your information, update your Google profile.</p>
                 </div>
-            <button onClick={handlePassword}>Change Password</button>
+            <button onClick={handlePassword} className="text-black-primary/70 my-12 md:my-0 underline font-bold">Change Password</button>
       </div>
       <form action="submit" className={password? "w-full" : "hidden"} onSubmit={handlePasswordChange}>
         <div className="flex flex-col mt-1">
             <label htmlFor="newPassword" className="text-white">New Password: </label>
-            <div className="relative w-[80%] min-w-[290px] ">
-                <input id="newPassword" className="w-full min-w-[290px] rounded-md shadow-sm shadow-black focus:border focus:border-[#fee302] focus:ring-0" type={passwordType} value={data.newPassword} onChange={(e) => setData({...data, newPassword: e.target.value})} required />
-                <button onClick={handleNewPassword} className={newPasswordVisible ? "absolute z-10 -right-4 top-[12px] lg:top-[10px] text-[#fee302]" : "hidden"}><MdVisibility /></button>
-                <button onClick={handleNewPassword} className={newPasswordVisible ? "hidden" : "absolute z-10 -right-4 top-[12px] lg:top-[10px] text-[#fee302]"}><MdVisibilityOff /></button>
+            <div className="relative w-full md:w-[80%] min-w-[290px] ">
+                <input id="newPassword" className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary  shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6" type={passwordType} value={data.newPassword} onChange={(e) => setData({...data, newPassword: e.target.value})} required />
+                <button onClick={handleNewPassword} className={newPasswordVisible ? "absolute z-10 right-4 top-[12px] lg:top-[10px] text-[#fee302]" : "hidden"}><MdVisibility /></button>
+                <button onClick={handleNewPassword} className={newPasswordVisible ? "hidden" : "absolute z-10 right-4 top-[12px] lg:top-[10px] text-[#fee302]"}><MdVisibilityOff /></button>
             </div>
         </div>
         <div className="flex flex-col mt-1">
             <label htmlFor="confirmPassword" className="text-white">Confirm Password: </label>
-            <div className="relative w-[80%] min-w-[290px] ">
-                <input id="confirmPassword" className="w-full min-w-[290px] rounded-md shadow-sm shadow-black focus:border focus:border-[#fee302] focus:ring-0" type={confirmPasswordType} value={data.confirmPassword} onChange={(e) => setData({...data, confirmPassword: e.target.value})} required />
-                <button type="button" onClick={handleConfirmPassword} className={confirmPasswordVisible ? "absolute z-10 -right-4 top-[12px] lg:top-[10px] text-[#fee302] hover:scale-100 hover:translate-y-0" : "hidden"}><MdVisibility /></button>
-                <button type="button" onClick={handleConfirmPassword} className={confirmPasswordVisible ? "hidden" : "absolute z-10 -right-4 top-[12px] lg:top-[10px] text-[#fee302] hover:scale-100 hover:translate-y-0"}><MdVisibilityOff /></button>
+            <div className="relative w-full md:w-[80%] min-w-[290px] ">
+                <input id="confirmPassword" className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary  shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6" type={confirmPasswordType} value={data.confirmPassword} onChange={(e) => setData({...data, confirmPassword: e.target.value})} required />
+                <button type="button" onClick={handleConfirmPassword} className={confirmPasswordVisible ? "absolute z-10 right-4 top-[12px] lg:top-[10px] text-[#fee302] hover:scale-100 hover:translate-y-0" : "hidden"}><MdVisibility /></button>
+                <button type="button" onClick={handleConfirmPassword} className={confirmPasswordVisible ? "hidden" : "absolute z-10 right-4 top-[12px] lg:top-[10px] text-[#fee302] hover:scale-100 hover:translate-y-0"}><MdVisibilityOff /></button>
             </div>
         </div>
 
@@ -133,9 +134,9 @@ const PasswordChange = ({provider, sessionId}: PasswordChangeProps) => {
                     <p className="text-white leading-tight">Passwords did not match. Please try again</p>
                 </div>
 
-        <div className="flex items-center gap-1 w-[80%] min-w-[290px] mt-6">
-            <button type="button" onClick={handleCancel} className="update flex items-center justify-center py-1 bg-gray-600 w-[30%] shadow-sm rounded-md shadow-black hover:scale-100 hover:translate-y-0">Cancel</button>
-            <button type="submit" className="update flex items-center justify-center px-0 py-1 rounded-md bg-[#fee302] w-[70%] shadow-sm shadow-black hover:scale-100 hover:translate-y-0 disabled:opacity-60">Change Password</button>
+        <div className="flex items-center gap-1 w-full md:w-[80%] min-w-[290px] mt-4">
+            <button type="button" onClick={handleCancel} className="bg-black-primary/50 text-yellow-primary font-bold w-[30%] py-1.5 rounded-[8px]">Cancel</button>
+            <button type="submit" className="bg-yellow-primary font-bold rounded-[8px] py-1.5 w-[70%]">Change Password</button>
         </div>
       </form>
     </div>

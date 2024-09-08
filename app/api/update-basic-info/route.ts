@@ -15,7 +15,7 @@ interface CustomSession extends Session {
 }
 
 // initialize stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY! as string)
 
 export async function POST(request: Request) {
     try {

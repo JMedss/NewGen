@@ -17,7 +17,7 @@ const ServiceSelectedInfo = ({price}: PropType ) => {
     const router = useRouter()
   return (
     <div className="flex flex-col h-full items-center">
-        <button onClick={() => router.push("/services")} className="flex items-center">
+        <button onClick={() => router.push("/#hosting")} className="flex items-center">
             <TiArrowBack className="text-[#fee302]"/>
             <p className="text-[#fee302]">Go Back</p>
         </button>

@@ -118,7 +118,7 @@ const RegisterForm = () => {
                         value={data.name || ""}
                         onChange={handleNameChange}
                         required
-                        className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+                        className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"          
                         />
                     </div>
                 </div>
@@ -136,7 +136,7 @@ const RegisterForm = () => {
                         value={data.email || ""}
                         onChange={handleEmailChange}
                         required
-                        className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+                        className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                         />
                     </div>
                 </div>
@@ -156,9 +156,10 @@ const RegisterForm = () => {
                         value={data.password || ""}
                         onChange={(e) => setData({...data, password: e.target.value})}
                         required
-                        className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+                        className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
+                        
                         />
-                        <button type="button" onClick={handlePasswordVisibility} className="absolute z-50 top-1/2 -right-2 -translate-y-1/2 text-[#fee302] hover:-translate-y-1/2">
+                        <button type="button" onClick={handlePasswordVisibility} className="absolute z-50 top-1/2 right-2 -translate-y-1/2 text-[#fee302] hover:-translate-y-1/2">
                             <MdVisibility className={newPasswordVisible ? "flex" : "hidden"} />
                             <MdVisibilityOff className={newPasswordVisible ? "hidden" : "flex"} />
                         </button>
@@ -179,9 +180,9 @@ const RegisterForm = () => {
                         value={data.confirmPassword || ""}
                         onChange={(e) => setData({...data, confirmPassword: e.target.value})}
                         required
-                        className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+                        className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
                         />
-                            <button type="button" onClick={handleConfirmPassword} className="absolute z-50 top-1/2 -right-2 -translate-y-1/2 text-[#fee302] hover:-translate-y-1/2">
+                            <button type="button" onClick={handleConfirmPassword} className="absolute z-50 top-1/2 right-2 -translate-y-1/2 text-[#fee302] hover:-translate-y-1/2">
                             <MdVisibility className={confirmPasswordVisible ? "flex" : "hidden"} />
                             <MdVisibilityOff className={confirmPasswordVisible ? "hidden" : "flex"} />
                             </button>
@@ -195,17 +196,17 @@ const RegisterForm = () => {
                 <div className="flex flex-col w-full">
                     <button
                         type="submit"
-                        className="flex w-full bg-gradient-to-r from-[#fee302]/60 to-[#fee302] justify-center rounded-md px-3 py-1.5 text-sm font-semibold text-white hover:translate-x-2 outline-none focus:ring-2 focus:ring-[#fff] focus:scale-105 focus:translate-x-2"
+                        className="flex w-full bg-gradient-to-r from-[#fee302]/60 to-[#fee302] justify-center rounded-[8px] px-3 py-1.5 text-sm font-semibold text-white  outline-none focus:ring-2 focus:ring-[#fff]"
                         >
                         Sign Up
                     </button>
                 </div>
             </form>
             <button
-                onClick={() => signIn("google", {callbackUrl: "http://localhost:3000/dashboard"})}
-                className="relative shadow-md shadow-black mt-4 flex justify-center w-full bg-black rounded-md px-3 py-1.5 text-sm font-semibold text-white hover:translate-x-2 outline-none focus:ring-2 focus:ring-[#fff] focus:scale-105 focus:translate-x-2 focus:shadow-lg focus:shadow-black hover:shadow-lg hover:shadow-black"
+                onClick={() => signIn("google", {callbackUrl: "/profile"})}
+                className="relative  mt-4 flex justify-center w-full bg-black rounded-[8px] px-3 py-1.5 text-sm font-semibold text-white  outline-none focus:ring-2 focus:ring-[#fff] "
                 >
-                <span className="bg-black w-[20%] h-full flex items-center justify-center absolute left-0 top-0">
+                <span className="bg-black w-[20%] rounded-[8px] h-full flex items-center justify-center absolute left-0 top-0">
                     <FcGoogle className="text-2xl" />
                 </span>
                 Sign Up With Google

@@ -3,24 +3,24 @@ import Stripe from "stripe";
 
 export async function POST(request: Request) {
     try {
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
-        // List services
-        const unformmatedPrices = await stripe.prices.list({
-            limit: 10,
-            active: true
-        })
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-        // pull the correct services
-        let prices = unformmatedPrices.data.filter((price) => {
-            return price.nickname === "Hosting Plan" || price.nickname === "Hosting & Maintenance Plan";
-        })
+        const allPlans = await stripe.plans.list({
+            active: true,
+            limit: 20
+        });
 
-        prices = prices.reverse()
+        const plans = allPlans.data.filter((plan) => {
+            return plan.nickname === "Basic Plan" || 
+                   plan.nickname === "Basic + Maintenance Plan" || 
+                   plan.nickname === "Premium Plan" || 
+                   plan.nickname === "Premium + Maintenance Plan";
+        });
 
+        return new Response(JSON.stringify(plans), { status: 200 });
 
-        return new Response(JSON.stringify({prices}), { status: 200 })
     } catch (error) {
-        console.error(error)
-        return new Response(JSON.stringify({message: "Error"}), { status: 500 })
+        console.error(error);
+        return new Response(JSON.stringify([]), { status: 500 });
     }
 }

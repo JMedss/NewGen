@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import toast from 'react-hot-toast'
 import { useSession } from 'next-auth/react'
 import { Session } from 'next-auth'
+import { useRouter } from 'next/navigation'
 
 type PropType = {
     price: {
@@ -34,8 +35,9 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const CheckoutForm = ({price}: PropType) => {
     let { data: session } = useSession()
-    //set session to custom session
     const customSession = session as CustomSession
+    //set session to custom session
+    //const customSession = session as CustomSession
     const [disabled, setDisabled] = useState(true)
     const [agreement, setAgreement] = useState(false)    
     const [stripeAgreement, setStripeAgreement] = useState(false)
@@ -66,9 +68,13 @@ const CheckoutForm = ({price}: PropType) => {
     }, [customSession?.user?.id, customSession?.user?.email, customSession?.user?.name])
 
 
+
     const stripe = useStripe();
     const elements = useElements();
 
+    useEffect(() => {
+        console.log(data)
+    }, [data])
 
 
     // Check if the form is filled out to activate the submit button
@@ -85,6 +91,9 @@ const CheckoutForm = ({price}: PropType) => {
                 color: "#fff",
                 fontSize: "16px",
                 fontFamily: "Futura PT, sans-serif",
+                "::placeholder": {
+                    color: "#fff",
+                },
             },
             invalid: {
                 color: "#9e2146",
@@ -94,6 +103,7 @@ const CheckoutForm = ({price}: PropType) => {
 
 
     // Submit the form with the card details
+    const router = useRouter()
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!stripe || !elements ) {
@@ -149,6 +159,7 @@ const CheckoutForm = ({price}: PropType) => {
                 }
                 await res.json();
                 toast.success("Payment successful")
+                router.push("/profile")
             })
         } catch (error) {
             toast.error("Error processing payment")
@@ -172,7 +183,7 @@ const CheckoutForm = ({price}: PropType) => {
                 <div className="flex flex-col">
                     <label className="text-[#fee302]" htmlFor="address">Street Address</label>
                     <input
-                        className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                        className="w-full placeholder-white bg-blue border-b border-white/50 rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white"
                         id="address"
                         type="text"
                         value={data.streetAddress}
@@ -185,7 +196,8 @@ const CheckoutForm = ({price}: PropType) => {
                     <div className="flex flex-col w-full">
                         <label className="text-[#fee302]" htmlFor="city">City</label>
                         <input
-                            className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                            className="w-full placeholder-white bg-blue border-b border-white/50 rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white"
+                        
                             id="city"
                             type="text"
                             value={data.city}
@@ -197,7 +209,7 @@ const CheckoutForm = ({price}: PropType) => {
                     <div className="flex flex-col">
                         <label className="text-[#fee302]" htmlFor="state">State</label>
                         <select 
-                            className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                            className="w-full placeholder-white bg-blue border-b border-white/50 rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white"
                             name="state" 
                             value={data.state}
                             onChange={(e) => setData({...data, state: e.target.value})}
@@ -212,7 +224,7 @@ const CheckoutForm = ({price}: PropType) => {
                 <div className="flex flex-col">
                         <label className="text-[#fee302]" htmlFor="country">Country</label>
                         <select 
-                            className="w-full country bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                            className="w-full placeholder-white bg-blue border-b border-white/50 rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white"
                             name="country"
                             value={data.country}
                             onChange={(e) => setData({...data, country: e.target.value})} 
@@ -229,7 +241,7 @@ const CheckoutForm = ({price}: PropType) => {
                     <div className="flex flex-col w-full">
                         <label className="text-[#fee302]" htmlFor="cardHolderName">Cardholder Name</label>
                         <input
-                            className="w-full bg-transparent border-b border-white rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white shadow-lg shadow-black"
+                            className="w-full placeholder-white bg-blue border-b border-white/50 rounded-md focus:border-none focus:ring-1 focus:ring-[#fee302] text-white"
                             value={data.cardholderName}
                             onChange={(e) => setData({...data, cardholderName: e.target.value})}
                             id="cardHolderName"
@@ -243,7 +255,7 @@ const CheckoutForm = ({price}: PropType) => {
 
                 <div className="flex flex-col">
                     <label className="text-[#fee302]">Card Details</label>
-                    <div className='border border-white rounded-md py-3 px-2 shadow-lg shadow-black focus:outline focus:outline-[#fee302]'>
+                    <div className='border border-white/50 rounded-md py-3 px-2 bg-blue focus:outline focus:outline-[#fee302]'>
                         <CardElement options={CARD_OPTIONS} />
                     </div>
                 </div>
@@ -275,7 +287,7 @@ const CheckoutForm = ({price}: PropType) => {
                 </div>
                 <button 
                 disabled={disabled}
-                className='bg-[#fee302] disabled:border disabled:border-[#fee302] disabled:bg-[#fee302]/0 disabled:hover:scale-100 disabled:hover:translate-y-0 focus:outline-1 focus:outline-white font-bold py-2 px-4 rounded-md shadow-lg shadow-black transition ease-in-out duration-300'
+                className='bg-[#fee302] disabled:bg-[#fee302]/60 focus:outline-1 focus:outline-white font-bold py-2 px-4 rounded-md transition ease-in-out duration-300'
                 type="submit" 
                 >
                     Pay

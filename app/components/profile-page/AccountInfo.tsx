@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import PasswordChange from "./PasswordChange"
 import toast from "react-hot-toast"
 import { getSession } from "next-auth/react"
+import xss from 'xss';
 
 type AccountInfoProps = {
     email: string | null | undefined,
@@ -16,12 +17,15 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
 
     const [readOnly, setReadOnly] = useState(true)
     const [googleAlert, setGoogleAlert] = useState(false)
+
+    // data for user information
     const [data, setData] = useState({
         email: "",
         name: "", 
         sessionId: ""
     })
     
+    // get the name, email and id from the props (session)
     useEffect(() => {
         if(email && name && id) {
             setData({
@@ -31,6 +35,8 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
             })
         }
     }, [email, name, id])
+
+    // handle edit information button click, if the user is signed in with google, show an alert
     const handleEdit = (e: React.FormEvent) => {
         e.preventDefault()
         if(provider === "google") {
@@ -43,6 +49,7 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
         }
     }
 
+    // function to cancel the edit and set data back to previous state
     const cancelEdit = (e: React.FormEvent) => {
         e.preventDefault()
         setReadOnly(true)
@@ -53,6 +60,17 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
                 sessionId: id
             })
         }
+    }
+
+    // function that sanitizes the input and updates data
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        console.log("name:", name, "value:", value)
+        const sanitizedValue = xss(value);  // Sanitize input value
+        setData({
+            ...data,
+            [name]: sanitizedValue
+        });
     }
 
     // function that updates the session after updates
@@ -89,23 +107,27 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
         }
     }
 
+    useEffect(() => {
+        console.log(data)
+    }, [data])
+
   return (
-    <div className="w-full border border-[#fee302] shadow-inner shadow-black py-8 px-2 min-w-[320px] md:min-w-[650px]">
+    <div className="w-full border border-[#fee302]  py-8 px-2 min-w-[320px] md:min-w-[650px] rounded-[8px]">
         <div className="flex flex-col items-center justify-center gap-12 md:items-stretch md:flex-row w-full md:gap-8">
            <div className="flex flex-col w-[50%] min-w-[300px]">
                 <h4 className="font-bold text-[20px] text-[#fee302] tracking-wider">Basic Information: </h4>
                 <form className="w-full" action="submit" onSubmit={updateBasicInfo}>
                     <div className="flex flex-col mt-1">
-                        <label htmlFor="name" className={readOnly ? "text-gray-300" : "text-white"}>Name: </label>
-                        <input className={readOnly ? "w-[80%] min-w-[290px] bg-gray-300 text-black/50 border-[1.6px] border-black rounded-md shadow-sm shadow-black" : "bg-white w-[80%] min-w-[290px] rounded-md shadow-sm shadow-black focus:ring-0 focus:border-1 focus:border-[#fee302]"} id="name" type="text" value={data.name ? data.name : ""} onChange={(e) => setData({...data, name: e.target.value})} readOnly={readOnly} disabled={readOnly} required/>
+                        <label htmlFor="name" className={readOnly ? "text-white-primary/70" : "text-white"}>Name: </label>
+                        <input className={readOnly ? "block w-full md:w-[80%] rounded-[8px] border-0 py-1.5 text-black-primary opacity-70 shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6" : "block w-full md:w-[80%] rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"} id="name" type="text" value={data.name ? data.name : ""} onChange={handleInputChange} readOnly={readOnly} disabled={readOnly} name="name" required/>
                     </div>
                     <div className="flex flex-col mt-1">
-                        <label htmlFor="email" className={readOnly ? "text-gray-300" : "text-white"}>Email: </label>
-                        <input className={readOnly ? "w-[80%] min-w-[290px] bg-gray-300 text-black/50 border-[1.6px] border-black rounded-md shadow-sm shadow-black" : "bg-white w-[80%] min-w-[290px] rounded-md shadow-sm shadow-black focus:ring-0 focus:border-1 focus:border-[#fee302]"} id="email" type="email" value={data.email ? data.email : ""} onChange={(e) => setData({...data, email: e.target.value})} readOnly={readOnly} disabled={readOnly} required/>
+                        <label htmlFor="email" className={readOnly ? "text-white-primary/70" : "text-white"}>Email: </label>
+                        <input className={readOnly ? "block w-full md:w-[80%] rounded-[8px] border-0 py-1.5 text-black-primary opacity-70 shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6" : "block w-full md:w-[80%] rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"} id="email" type="email" value={data.email ? data.email : ""} onChange={handleInputChange} readOnly={readOnly} disabled={readOnly} name="email" required/>
                     </div>
                     <div className="flex items-center w-[80%] min-w-[290px] gap-2 mt-4">
-                        <button type="button" onClick={cancelEdit} className={readOnly ? "hidden" : "bg-gray-600 w-full hover:scale-100 hover:translate-y-0"}>Cancel</button>
-                        <button className={readOnly ? "hidden" : "bg-[#fee302] w-full hover:scale-100 hover:translate-y-0"}>Update</button>
+                        <button type="button" onClick={cancelEdit} className={readOnly ? "hidden" : "bg-black-primary/50 text-yellow-primary font-bold w-full py-1.5 rounded-[8px]"}>Cancel</button>
+                        <button className={readOnly ? "hidden" : "bg-yellow-primary font-bold rounded-[8px] py-1.5 w-full"}>Update</button>
                     </div>
                 </form>
                 
@@ -113,7 +135,7 @@ const AccountInfo = ({ email, name, provider, id, stripeId }: AccountInfoProps) 
                     <p className="text-white leading-tight">Your account was signed in using google. To update your information, update your Google profile.</p>
                 </div>
 
-                <button onClick={handleEdit} className={readOnly ? "w-[80%] min-w-[290px] update bg-gray-600 rounded-md py-1 mt-2 shadow-sm shadow-black" : "hidden"}>Edit Information</button>
+                <button onClick={handleEdit} className={readOnly ? "w-full md:w-[80%] bg-yellow-primary font-bold rounded-[8px] py-1.5" : "hidden"}>Edit Information</button>
            </div>
            <PasswordChange provider={provider} sessionId={id}/>
         </div>

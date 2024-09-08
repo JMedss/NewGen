@@ -27,7 +27,7 @@ type Proptypes = {
   cardType: "link" | "card" | null | undefined
 }
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST!)
 
 const SubscriptionInfo = ({ subscriptions, cardInfo, invoice, customerStripeId, customerId, provider, cardType }: Proptypes) => {
   // state for loading
@@ -75,19 +75,19 @@ const SubscriptionInfo = ({ subscriptions, cardInfo, invoice, customerStripeId, 
       }
     }
   return (
-    <div className="w-full border border-[#fee302] shadow-inner shadow-black py-8 px-2 min-w-[320px] lg:min-w-[650px]">
+    <div className="w-full border border-[#fee302]  py-8 px-2 rounded-[8px] min-w-[320px] lg:min-w-[650px]">
         <div className='flex flex-col items-center gap-6 lg:flex-row lg:items-start lg:gap-4'>
           <div className='w-full flex flex-col items-center lg:items-start'>
             <div className='flex justify-start w-full py-2 px-2 max-w-[400px] lg:max-w-full'>
               <h4 className="font-bold text-[20px] text-[#fee302] tracking-wider">Active Subscription: </h4>
             </div>
-            <div className='flex items-center justify-center border border-gray-400 w-full h-full py-2 px-2 max-w-[400px] lg:max-w-[800px] lg:h-[120px]'>
+            <div className='flex items-center justify-center w-full h-full py-2 px-2 max-w-[400px] lg:max-w-[800px] lg:h-[120px]'>
                 {loading && <p className='text-[#fee302] font-bold'>Loading...</p>}
                 {subscriptions && cardInfo && (
                 <div className='flex flex-col lg:flex-row lg:items-center lg:gap-10'>
                     <div className='flex flex-col items-center justify-center'>
                       <p className='font-bold text-white text-[22px]'>${(subscriptions[0]?.items?.data[0]?.price?.unit_amount ?? 0) / 100}/MO</p>
-                      <p className='text-gray-400 text-[18px] text-center'>{subscriptions[0].items.data[0].plan.nickname}</p>
+                      <p className='text-yellow-primary text-[18px] text-center'>{subscriptions[0].items.data[0].plan.nickname}</p>
                     </div>
                     <div className='flex flex-col items-center w-full h-full gap-4'>
                       <div>
@@ -136,11 +136,11 @@ const SubscriptionInfo = ({ subscriptions, cardInfo, invoice, customerStripeId, 
             <div className='w-full py-2 px-2 max-w-[400px]'>
               <h4 className="font-bold text-[20px] text-[#fee302] tracking-wider">Manage Subscription: </h4>
             </div>
-            <div className='flex items-center justify-center border border-gray-400 w-full max-w-[400px] py-2 px-2 lg:h-[120px]'>
+            <div className='flex items-center justify-center w-full max-w-[400px] py-2 px-2 lg:h-[120px]'>
                   <div className='flex flex-col w-full gap-2'>
-                      <button disabled={noSubscription || cardInfo?.type === "link"} onClick={handleChangePayment} className='bg-gray-500 lg:text-[18px] lg:px-0 hover:scale-100 hover:translate-y-0 hover:opacity-90 disabled:hidden'>Change Payment Method</button>
-                      <button disabled={noSubscription || cardInfo?.type === "link"} onClick={handleCancelSubscription} className='bg-gray-500 lg:text-[18px] lg:px-0 hover:scale-100 hover:translate-y-0 hover:opacity-90 disabled:hidden'>Cancel Subscription</button>
-                      <button onClick={handleDeleteAccount} className='bg-red-500 lg:text-[18px] lg:px-0 hover:scale-100 hover:translate-y-0 hover:opacity-90'>Delete Account</button>
+                      <button disabled={noSubscription || cardInfo?.type === "link"} onClick={handleChangePayment} className=' lg:text-[18px] lg:px-0 text-white-primary underline font-medium tracking-wider disabled:hidden'>Change Payment Method</button>
+                      <button disabled={noSubscription || cardInfo?.type === "link"} onClick={handleCancelSubscription} className=' lg:text-[18px] lg:px-0 text-white-primary underline font-medium tracking-wider disabled:hidden'>Cancel Subscription</button>
+                      <button onClick={handleDeleteAccount} className='bg-red-500 rounded-[8px] py-2 font-bold text-white-primary lg:text-[18px] lg:px-0 hover:scale-100 hover:translate-y-0 hover:opacity-90'>Delete Account</button>
                   </div>
             </div>
           </div>

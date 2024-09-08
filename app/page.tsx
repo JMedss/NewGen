@@ -1,5 +1,11 @@
-import Image from "next/image"
-import Buttons from "./components/Buttons"
+import HeroSection from "./components/hero-section/HeroSection"
+import DiscountBar from "./components/discount-bar/DiscountBar"
+import FeaturesSection from "./components/features/FeaturesSection"
+import BenefitsSection from "./components/benefits/BenefitsSection"
+import ProcessSection from "./components/process/ProcessSection"
+import WebsitePackages from "./components/websitepackages/WebsitePackages"
+import HostingPlans from "./components/hosting/HostingPlans"
+import CTA from "./components/cta/CTA"
 
 
 
@@ -7,12 +13,17 @@ export default async function Home() {
 
   return (
     <main>
-        <section className="w-screen min-h-screen flex justify-center mt-32">
-             <div className="flex flex-col items-center">
-                  <h1 className="my-32">WEBSITE UNDER CONSTRUCTION</h1> 
-                  <Buttons />
-             </div>
-        </section>
+        <HeroSection />
+        <DiscountBar />
+        <FeaturesSection />
+        <BenefitsSection />
+        <ProcessSection />
+        <WebsitePackages />
+        <HostingPlans />
+        <CTA />
     </main>
   )
 }
+
+
+ 

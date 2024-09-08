@@ -20,16 +20,18 @@ const LoginForm = () => {
         password: "",
     })
     const router = useRouter()
+
+    // function to login user
     const loginUser = async (e: React.FormEvent<HTMLFormElement>) : Promise<void> => {
         e.preventDefault()
-        signIn("credentials", {...data, redirect: false, callbackUrl: "/dashboard"})
+        signIn("credentials", {...data, redirect: false })
         .then((callback) => {
             if(callback?.error) {
                 toast.error(callback.error)
             }
-            if (callback?.ok && !callback?.error) {
+            if (callback?.ok) {
             toast.success("Logged in successfully")
-            router.push("/dashboard")
+            router.push("/profile")
             }
         })
         .finally(() => setData({email: "", password: ""}))
@@ -74,7 +76,8 @@ const LoginForm = () => {
                     value={data.email || ""}
                     onChange={(e) => setData({...data, email: e.target.value})}
                     required
-                    className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+              className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
+                    
                     />
                 </div>
             </div>
@@ -94,9 +97,10 @@ const LoginForm = () => {
                     value={data.password || ""}
                     onChange={(e) => setData({...data, password: e.target.value})}
                     required
-                    className="block w-full rounded-md py-1.5 text-gray-900 shadow-md outline-none focus:outline-none focus:ring-[1.8px] focus:ring-[#fee302] shadow-black focus:scale-105 focus:shadow-lg focus:shadow-black focus:translate-x-2 placeholder:text-gray-400 sm:text-sm sm:leading-6 transition-all ease-in-out duration-150"
+              className="block w-full rounded-[8px] border-0 py-1.5 text-black-primary shadow-sm ring-1 ring-inset ring-yellow-primary placeholder:text-black-primary/40 focus:ring-2 focus:ring-inset focus:ring-yellow-primary sm:text-sm sm:leading-6"
+                    
                     />
-                    <button type="button" className="absolute top-1/2 -translate-y-1/2 -right-1 text-[#fee302] hover:-translate-y-1/2">
+                    <button type="button" className="absolute top-1/2 -translate-y-1/2 right-2 text-[#fee302] hover:-translate-y-1/2">
                         <MdVisibility onClick={toggleVisibility} className={showPassword ? "flex" : "hidden"}/>
                         <MdVisibilityOff onClick={toggleVisibility} className={showPassword ? "hidden" : "flex"}/>
                     </button>
@@ -106,17 +110,17 @@ const LoginForm = () => {
             <div>
                 <button
                     type="submit"
-                    className="flex w-full bg-gradient-to-r from-[#fee302]/60 to-[#fee302] justify-center rounded-md px-3 py-1.5 text-sm font-semibold text-white hover:translate-x-2 outline-none focus:ring-2 focus:ring-[#fff] focus:scale-105 focus:translate-x-2"
+                    className="flex w-full bg-gradient-to-r from-[#fee302]/60 to-[#fee302] justify-center rounded-[8px] px-3 py-1.5 text-sm font-semibold text-white  outline-none focus:ring-2 focus:ring-[#fff] "
                     >
                     Sign In
                 </button>
             </div>
         </form>
         <button
-                onClick={() => signIn("google", {callbackUrl: "https://www.newgendigitalmedia.com/dashboard"})}
-                className="relative shadow-md shadow-black mt-4 flex justify-center w-full bg-black rounded-md px-3 py-1.5 text-sm font-semibold text-white hover:translate-x-2 outline-none focus:ring-2 focus:ring-[#fff] focus:scale-105 focus:translate-x-2 focus:shadow-lg focus:shadow-black hover:shadow-lg hover:shadow-black"
+                onClick={() => signIn("google", {callbackUrl: "/profile"})}
+                className="relative  mt-4 flex justify-center w-full bg-black rounded-[8px] px-3 py-1.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-[#fff]  focus:shadow-lg  "
                 >
-                <span className="bg-black w-[20%] h-full flex items-center justify-center absolute left-0 top-0">
+                <span className="bg-black w-[20%] rounded-[8px] h-full flex items-center justify-center absolute left-0 top-0">
                     <FcGoogle className="text-2xl" />
                 </span>
                 Sign In With Google
